@@ -1,0 +1,85 @@
+version: "3"
+services:
+  geth-miner-1:
+    hostname: geth-miner-1
+    environment:
+      - address=0x1aa397e02fb3abba1072b431e92b0f90fe60993c #derived from the private key which is passed in the args
+      - nodekeyhex=b542e60b91fde780972a807d33aca21976ab2b507999292465d13b5b73f907a1
+    build:
+      context: .
+      dockerfile: ./miner/Dockerfile
+      args:
+        privatekey: 6ba10317b73f7b2ccb72a32776deb34f9e293ecd53249cc07a7b2ddcdc4a516a # Please don't do something like this in production, okay?
+        password: 123456
+    ports:
+      - 8546:8545
+    container_name: geth-miner-1
+    networks:
+      chainnet:
+        ipv4_address: 172.25.0.102
+
+  geth-miner-2:
+    hostname: geth-miner-2
+    environment:
+      - address=0xb4675e493f17b84828e70f18fddce3c55ec67d6f #derived from the private key which is passed in the args
+      - nodekeyhex=28255ab38f4fabb18d74a3945f0a5778d3c931b3d6a675941f0ee50badb174f8
+    build:
+      context: .
+      dockerfile: ./miner/Dockerfile
+      args:
+        privatekey: de4e215aafd215d0bdded8150ff2ce34cc5f36bda18805f45374d2b7e3f746a1 # Please don't do something like this in production, okay?
+        password: 123456
+    container_name: geth-miner-2
+    ports:
+      - 8547:8545
+    networks:
+      chainnet:
+        ipv4_address: 172.25.0.103
+
+  geth-miner-3:
+    hostname: geth-miner-3
+    environment:
+      - address=0x192bbe6143d57fee4d0e6fd6ec55d9c83bd5d6c9 #derived from the private key which is passed in the args
+      - nodekeyhex=eebc8b680313266e650efc4ce923b31f03507d2917ae4755aaf94bd793d4f38e
+    build:
+      context: .
+      dockerfile: ./miner/Dockerfile
+      args:
+        privatekey: 92786010605db23cec8db366a6884c98abf0c0ce13f13ccd16e8e96b52f71a24 # Please don't do something like this in production, okay?
+        password: 123456
+    container_name: geth-miner-3
+    ports:
+      - 8548:8545
+    networks:
+      chainnet:
+        ipv4_address: 172.25.0.104
+
+
+  geth-node:
+    hostname: geth-node
+    depends_on:
+      - geth-miner-1
+    environment:
+      - address=0x82C6a1D3Bbd77416d539706b0aFf2129F8Df0CeD #derived from the private key which is passed in the args
+    build:
+      context: .
+      dockerfile: ./node/Dockerfile
+      args:
+        privatekey: abbf3f5a4129d7f088a3ca4fc7706044b85f376b20d2e69a8dcc12391b57740b
+        password: 123456
+    container_name: geth-node
+    ports:
+      - 8545:8545
+      - 19090:19090
+
+    networks:
+      chainnet:
+        ipv4_address: 172.25.0.110
+
+networks:
+  chainnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/24
+

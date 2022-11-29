@@ -1,0 +1,6 @@
+**/dist/
+**/sepolia/
+**/logs/
+**/geth*
+
+**/.DS_Store
