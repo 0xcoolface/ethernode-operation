@@ -1,0 +1,7 @@
+# config file for sepolia testnet 
+sepolia: true
+datadir: "sepolia"
+restore-target-dir: "sepolia"
+execution-endpoint: "http://localhost:8551"
+jwt-secret: "jwt.hex"
+genesis-state: "genesis.ssz"

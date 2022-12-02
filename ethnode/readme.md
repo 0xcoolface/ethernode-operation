@@ -53,11 +53,13 @@ For sepolia:
 curl https://raw.githubusercontent.com/eth-clients/merge-testnets/main/sepolia/genesis.ssz --output genesis.ssz
 ```
 
-4. Run the consensus node, refer to `./consensus/prysm/start.sh`
+4. Start the consensus node, refer to `./consensus/prysm/start.sh`
 
 ```shell
 ./prysm.sh beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --jwt-secret=jwt.hex --genesis-state=genesis.ssz
 ```
+
+Or start the node with a config file, refer to `./consensus/prysm/start-with-config-file.sh`. It's the same.
 
 > If you want to run a node for a validator, then there're some more steps and configs, you need to refer to the docs and fully understand the `Best practices`.
 
@@ -79,7 +81,7 @@ geth --sepolia --datadir sepolia dumpconfig > config.toml
 ```
 
 3. copy the the `jwt.hex` for `geth`.
-4. run the node, refer to `execution/start.sh`.
+4. start the node, refer to `execution/start.sh`.
 
 
 ## 2 Other choice: Guided setup
